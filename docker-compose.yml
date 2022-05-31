@@ -1,0 +1,14 @@
+version: '3'
+
+services: 
+  database-chat: 
+    container_name: 'database-chat'
+    image: postgres:9.6.24-alpine3.15
+    environment: 
+        POSTGRES_USER: root
+        POSTGRES_PASSWORD: root
+        POSTGRES_DB: database-chat
+    volumes:
+      - ./docker:/var/lib/postgresql/data
+    ports: 
+      - '5432:5432'

@@ -1,1 +1,5 @@
 export const USER_REPOSITORY = 'USER_REPOSITORY';
+
+export const HASH_PROVIDER = 'HASH_PROVIDER';
+
+export const AUTH_PROVIDER = 'AUTH_PROVIDER';

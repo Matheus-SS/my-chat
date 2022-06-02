@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
+import { ConfigModule } from '@nestjs/config';
 import { PrismaModule } from './infra/data/prisma/prisma.module';
-import { PrismaUserModule } from './infra/data/prisma/repository/user/user.module';
 import { PrismaUserRepository } from './infra/data/prisma/repository/user/user.repository';
 import { JwtAuthenticationProvider } from './infra/provider/authenticationProvider/jwtAuthenticationProvider';
 import { BcryptHashProvider } from './infra/provider/hashProvider/bcryptHashProvider';
@@ -14,7 +14,7 @@ import { AuthenticationUserUseCase } from './use-cases/user/authenticationUserUs
 import { CreateUserUseCase } from './use-cases/user/CreateUserUseCase';
 
 @Module({
-  imports: [PrismaModule, PrismaUserModule],
+  imports: [ConfigModule.forRoot(), PrismaModule],
   controllers: [UserController],
   providers: [
     {

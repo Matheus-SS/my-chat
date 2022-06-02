@@ -1,6 +1,4 @@
 export interface IConfig {
-  jwt: {
-    secretKey: string;
-    expiresIn: string;
-  };
+  secretKey: string;
+  expiresIn: string;
 }

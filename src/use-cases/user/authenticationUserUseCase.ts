@@ -1,4 +1,4 @@
-import { Inject, NotFoundException } from '@nestjs/common';
+import { Inject } from '@nestjs/common';
 import { AbstractHashProvider } from 'src/shared/abstract/hashProvider';
 import { AbstractUserRepository } from 'src/shared/abstract/userRepository';
 import {
@@ -9,6 +9,7 @@ import {
 import { AuthenticationResponseDto } from 'src/shared/dto/authenticationResponseDto';
 import { AbstractAuthenticationProvider } from 'src/shared/abstract/authenticationProvider';
 import { AuthenticationCreateDto } from 'src/shared/dto/authenticationCreateDto';
+import { AppError } from 'src/shared/exception/appError';
 
 export class AuthenticationUserUseCase {
   constructor(
@@ -26,7 +27,7 @@ export class AuthenticationUserUseCase {
     const user = await this.userRepository.findByEmail(email);
 
     if (!user) {
-      throw new NotFoundException('Usuário ou/e senha não existem');
+      throw AppError.NotFound('Usuário ou/e senha não existem');
     }
 
     const isValidPassword = await this.hashProvider.comparehash(
@@ -35,7 +36,7 @@ export class AuthenticationUserUseCase {
     );
 
     if (!isValidPassword) {
-      throw new NotFoundException('Usuário ou/e senha não existem');
+      throw AppError.NotFound('Usuário ou/e senha não existem');
     }
 
     const token = this.authProvider.generateToken(user.id);

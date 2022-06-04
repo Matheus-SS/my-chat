@@ -1,5 +1,6 @@
-import { BadRequestException, Inject, Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { UserEntity } from 'src/domain/user.entity';
+import { AppError } from 'src/shared/exception/appError';
 import { AbstractHashProvider } from 'src/shared/abstract/hashProvider';
 import { AbstractUserRepository } from 'src/shared/abstract/userRepository';
 import { HASH_PROVIDER, USER_REPOSITORY } from 'src/shared/constant';
@@ -18,7 +19,7 @@ export class CreateUserUseCase {
     const userExists = await this.userRepository.findByEmail(user.email);
 
     if (userExists) {
-      throw new BadRequestException('Usuário já cadastrado');
+      throw AppError.BadRequest('Usuário já cadastrado');
     }
 
     const hashedPassword = await this.hashProvider.generatehash(user.password);

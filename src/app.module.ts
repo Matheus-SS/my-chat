@@ -10,7 +10,7 @@ import {
   HASH_PROVIDER,
   USER_REPOSITORY,
 } from './shared/constant';
-import { AuthenticationUserUseCase } from './use-cases/user/authenticationUserUseCase';
+// import { AuthenticationUserUseCase } from './use-cases/user/authenticationUserUseCase';
 import { CreateUserUseCase } from './use-cases/user/CreateUserUseCase';
 
 @Module({
@@ -30,7 +30,7 @@ import { CreateUserUseCase } from './use-cases/user/CreateUserUseCase';
       useClass: JwtAuthenticationProvider,
     },
     CreateUserUseCase,
-    AuthenticationUserUseCase,
+    // AuthenticationUserUseCase,
   ],
 })
 export class AppModule {}

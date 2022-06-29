@@ -6,7 +6,6 @@ import {
   HttpStatus,
 } from '@nestjs/common';
 import { AbstractHttpAdapter } from '@nestjs/core';
-import { AppLogger } from '../logger';
 
 @Catch()
 export class AllExceptionsFilter implements ExceptionFilter {
@@ -20,6 +19,7 @@ export class AllExceptionsFilter implements ExceptionFilter {
         ? exception.getStatus()
         : HttpStatus.INTERNAL_SERVER_ERROR;
 
+    console.log(exception);
     const responseBody = {
       message: exception.message,
       error: exception.getResponse().error,

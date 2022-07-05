@@ -7,6 +7,24 @@ describe('UserEntity', () => {
     expect(entity).toBeTruthy();
   });
 
+  test('Deveria criar um novo usuário com email todo em minúsculo', () => {
+    const entity = new UserEntity('megan', 'MeGAN@gmail.com', '123456');
+
+    expect(entity.getEmail).toEqual('megan@gmail.com');
+  });
+
+  test('Deveria criar um novo usuário com a primeira letra do nome maiúscula', () => {
+    const entity = new UserEntity('mEgaN', 'megan@gmail.com', '123456');
+
+    expect(entity.getName).toEqual('Megan');
+  });
+
+  test('Deveria lançar um erro ao tentar criar usuario com o nome composto', () => {
+    expect(
+      () => new UserEntity('megan jane', 'megan@gmail.com', '123456'),
+    ).toThrow('Must be only your firstname');
+  });
+
   test('Deveria lançar um erro ao tentar criar usuario sem nome', () =>
     expect(() => new UserEntity('', 'megan@gmail.com', '123456')).toThrow(
       'Name is required',

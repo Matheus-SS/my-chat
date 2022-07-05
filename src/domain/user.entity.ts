@@ -7,43 +7,31 @@ export class UserEntity {
   private password: string;
 
   constructor(name: string, email: string, password: string) {
-    if (name === undefined || name === null || name === '') {
-      throw AppError.BadRequest('Name is required');
-    }
+    if (this.isNullOrEmpty(name)) throw AppError.BadRequest('Name is required');
 
-    const nameRegex = new RegExp(/^[a-zA-Z]+$/);
-    const isOnlyLetter = nameRegex.test(name);
-    if (!isOnlyLetter) {
+    if (this.containsWhitespace(name))
+      throw AppError.BadRequest('Must be only your firstname');
+
+    if (!this.isOnlyLetter(name))
       throw AppError.BadRequest('Name must have only letters');
-    }
 
-    if (name.length < 4 || name.length > 30) {
+    if (!this.isMinLength(4, name) || !this.isMaxLength(30, name))
       throw AppError.BadRequest('Name must be between 4 and 30 characters');
-    }
 
-    if (email === undefined || email === null || email === '') {
+    if (this.isNullOrEmpty(this.formatEmail(email)))
       throw AppError.BadRequest('Email is required');
-    }
 
-    const emailRegex = new RegExp(
-      /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
-    );
-    const isValidEmail = emailRegex.test(email);
-
-    if (!isValidEmail) {
+    if (!this.isValidEmail(this.formatEmail(email)))
       throw AppError.BadRequest('Email is not valid');
-    }
 
-    if (password === undefined || password === null || password === '') {
+    if (this.isNullOrEmpty(password))
       throw AppError.BadRequest('Password is required');
-    }
 
-    if (password.length < 6 || password.length > 30) {
+    if (!this.isMinLength(6, password) || !this.isMaxLength(30, password))
       throw AppError.BadRequest('Password must be between 6 and 30 characters');
-    }
 
-    this.name = name;
-    this.email = email;
+    this.name = this.capitalizeFirstLetter(name);
+    this.email = this.formatEmail(email);
     this.password = password;
   }
 
@@ -73,6 +61,42 @@ export class UserEntity {
 
   public get getPassword(): string {
     return this.password;
+  }
+
+  private isNullOrEmpty(value: string): boolean {
+    return value == null || value == '';
+  }
+
+  private isOnlyLetter(value: string): boolean {
+    const letterRegex = new RegExp(/^[a-zA-Z]+$/);
+    return letterRegex.test(value);
+  }
+
+  private isMinLength(numChars: number, text: string): boolean {
+    return text.length >= numChars;
+  }
+
+  private isMaxLength(numChars: number, text: string): boolean {
+    return text.length <= numChars;
+  }
+
+  private capitalizeFirstLetter(text: string): string {
+    return text.trim().charAt(0).toUpperCase() + text.slice(1).toLowerCase();
+  }
+
+  private containsWhitespace(text: string): boolean {
+    return /\s/.test(text);
+  }
+
+  private formatEmail(email: string): string {
+    return email.toLowerCase().trim();
+  }
+
+  private isValidEmail(email: string): boolean {
+    const emailRegex = new RegExp(
+      /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
+    );
+    return emailRegex.test(email);
   }
 
   public setPassword(password: string) {

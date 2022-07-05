@@ -18,10 +18,10 @@ export class UserEntity {
     if (!this.isMinLength(4, name) || !this.isMaxLength(30, name))
       throw AppError.BadRequest('Name must be between 4 and 30 characters');
 
-    if (this.isNullOrEmpty(this.formatEmail(email)))
+    if (this.isNullOrEmpty(email))
       throw AppError.BadRequest('Email is required');
 
-    if (!this.isValidEmail(this.formatEmail(email)))
+    if (!this.isValidEmail(email))
       throw AppError.BadRequest('Email is not valid');
 
     if (this.isNullOrEmpty(password))

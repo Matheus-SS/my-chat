@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { UserEntity } from 'src/domain/user.entity';
+import { UserEntity } from 'src/domain/user/user.entity';
 import { AppError } from 'src/shared/exception/appError';
 import { AbstractHashProvider } from 'src/shared/abstract/hashProvider';
 import { AbstractUserRepository } from 'src/shared/abstract/userRepository';

@@ -1,5 +1,5 @@
 import { Body, Controller, Post } from '@nestjs/common';
-import { UserEntity } from 'src/domain/user.entity';
+import { UserEntity } from 'src/domain/user/user.entity';
 import { AuthenticationCreateDto } from 'src/shared/dto/authenticationCreateDto';
 import { AuthenticationResponseDto } from 'src/shared/dto/authenticationResponseDto';
 import { CreateUserDto } from 'src/shared/dto/createUserDto';
